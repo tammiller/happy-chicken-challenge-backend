@@ -2,6 +2,11 @@ provider "aws" {
   region = "eu-central-1"
 }
 
+locals {
+  account_id = "045222016985"
+  user_names = ["bai", "ems", "manasa", "salwa", "tamara"]
+}
+
 terraform {
   backend "s3" {
     bucket = "running-state-happy-chicken"
@@ -11,6 +16,12 @@ terraform {
     dynamodb_table = "running-state-happy-chicken-lock"
     encrypt = true
   }
+}
+
+variable "account_id" {
+  description = "ID of the root account"
+  type = string
+  default = "045222016985"
 }
 
 resource "aws_dynamodb_table" "challenge_table" {
@@ -66,4 +77,61 @@ resource "aws_dynamodb_table" "terraform_locks" {
     name = "LockID"
     type = "S"
   }
+}
+
+resource "aws_iam_user" "iam_users" {
+  for_each = toset(local.user_names)
+  name = each.value
+}
+
+resource "aws_iam_policy" "iam_policy_admin" {
+  name        = "ChickenAdmin"
+  description = "An example policy allowing all actions on all resources"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect   = "Allow",
+        Action   = "*",
+        Resource = "*",
+      },
+    ],
+  })
+}
+
+resource "aws_iam_role" "role_admin" {
+  name = "ChickenAdminRole"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = "sts:AssumeRole",
+        Effect = "Allow",
+        Principal = {
+          AWS = [
+            for user_name in local.user_names : "arn:aws:iam::${local.account_id}:user/${user_name}"
+          ]
+        },
+      },
+    ],
+  })
+}
+
+resource "aws_iam_policy_attachment" "iam_policy_admin_attachment" {
+  policy_arn = aws_iam_policy.iam_policy_admin.arn
+  roles      = [aws_iam_role.role_admin.name]
+  name       = "AdminPolicyAttachment"
+}
+
+resource "aws_iam_user_policy_attachment" "iam_user_role_attachment" {
+  for_each = toset(local.user_names)
+  user       = each.value
+  policy_arn = aws_iam_policy.iam_policy_admin.arn
+}
+
+resource "aws_iam_user_login_profile" "iam_user_login_profile" {
+  for_each = toset(local.user_names)
+  user    = each.value
+  password_reset_required = true
 }
