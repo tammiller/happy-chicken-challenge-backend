@@ -105,7 +105,7 @@
 							<apiPackage>happy.chicken.backend.api</apiPackage>
 							<modelPackage>happy.chicken.backend.model</modelPackage>
 							<configOptions>
-								<sourceFolder>src/gen/java/main</sourceFolder>
+								<interfaceOnly>true</interfaceOnly>
 							</configOptions>
 
 						</configuration>
