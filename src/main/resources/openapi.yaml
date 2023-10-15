@@ -1,0 +1,184 @@
+---
+openapi: 3.0.0
+info:
+  title: Daily Entries API
+  version: 1.0.0
+  description: An API for managing daily entries and challenges.
+paths:
+  /users:
+    post:
+      summary: Create a new user using given id and name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "201":
+          description: User created successfully.
+        "400":
+          description: Bad request. Check your request data.
+  /challenges:
+    post:
+      summary: Create Challenge
+      description: Create a new challenge.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Challenge"
+      responses:
+        "201":
+          description: Challenge created successfully.
+        "400":
+          description: Bad request. Check your request data.
+  "/challenges/{challengeId}":
+    parameters:
+      - name: challengeId
+        in: path
+        required: true
+        description: The unique identifier of the challenge.
+        schema:
+          type: integer
+    get:
+      summary: Get Challenge
+      description: Retrieve information about a specific challenge.
+      responses:
+        "200":
+          description: Challenge information retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Challenge"
+  "/challenges/{challengeId}/daily-entries":
+    parameters:
+      - name: challengeId
+        in: path
+        required: true
+        description: The unique identifier of the challenge.
+        schema:
+          type: integer
+    get:
+      summary: Get Daily Entries for a Challenge
+      description: Retrieve a list of daily entries for a specific challenge.
+      responses:
+        "200":
+          description: List of daily entries for the challenge successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DailyEntry"
+    post:
+      summary: Create Daily Entry for Challenge
+      description: Create a new daily entry for a specific challenge.
+      parameters:
+        - name: challengeId
+          in: path
+          required: true
+          description: The unique identifier of the challenge.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DailyEntry"
+      responses:
+        "201":
+          description: Daily entry created successfully.
+        "400":
+          description: Bad request. Check your request data.
+  "/challenges/{challengeId}/daily-entries/{entryId}":
+    parameters:
+      - name: challengeId
+        in: path
+        required: true
+        description: The unique identifier of the challenge.
+        schema:
+          type: integer
+      - name: entryId
+        in: path
+        required: true
+        description: The unique identifier of the daily entry within the challenge.
+        schema:
+          type: integer
+    put:
+      summary: Update Daily Entry
+      description: Update an existing daily entry within a challenge.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DailyEntry"
+      responses:
+        "200":
+          description: Daily entry updated successfully.
+        "400":
+          description: Bad request. Check your request data.
+        "404":
+          description: Daily entry not found.
+components:
+  schemas:
+    Challenge:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the challenge.
+        user_id:
+          type: string
+          format: uuid
+        start:
+          type: string
+          format: date
+        numberOfDays:
+          type: integer
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - EXPIRED
+            - ENDED
+        dailyEntries:
+          type: array
+          items:
+            $ref: "#/components/schemas/DailyEntry"
+      required:
+        - name
+        - description
+    DailyEntry:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the daily entry.
+        date:
+          type: string
+          format: date
+          description: Date of the daily entry in YYYY-MM-DD format.
+        status:
+          type: boolean
+          description: The boolean status for the daily entry (e.g., true or false).
+      required:
+        - date
+        - status
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: uuid
+          description: Unique identifier for the user.
+        name:
+          type: string
+          description: Name of the user.
+      required:
+        - id
+        - name

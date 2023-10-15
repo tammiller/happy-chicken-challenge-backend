@@ -24,15 +24,21 @@ variable "account_id" {
   default = "045222016985"
 }
 
-resource "aws_dynamodb_table" "challenge_table" {
-  name        = "challenge-table"
+resource "aws_dynamodb_table" "dynamodb_table_user_challenge" {
+  name        = "user_challenge"
   read_capacity  = 10
   write_capacity = 10
-  hash_key       = "id"
+  hash_key       = "user_id"
+  range_key      = "challenge_id"
   attribute {
-    name = "id"
+    name = "user_id"
     type = "S"
   }
+  attribute {
+    name = "challenge_id"
+    type = "S"
+  }
+
   tags = {
     environment       = "dev"
   }
@@ -111,3 +117,4 @@ resource "aws_iam_user_login_profile" "iam_user_login_profile" {
   user    = each.value
   password_reset_required = false
 }
+
