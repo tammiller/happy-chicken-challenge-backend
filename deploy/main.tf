@@ -118,3 +118,51 @@ resource "aws_iam_user_login_profile" "iam_user_login_profile" {
   password_reset_required = false
 }
 
+resource "aws_ecr_repository" "ecr_repository" {
+  name = "happy-chicken-challenge-backend"
+  image_tag_mutability = "MUTABLE"
+}
+
+# deployment
+resource "aws_key_pair" "key_pair" {
+  key_name   = "key-pair"
+  public_key = file("~/.ssh/key-pair.pub")
+}
+
+data "aws_ami" "amazon_linux_2" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*"]
+  }
+  filter {
+    name   = "owner-alias"
+    values = ["amazon"]
+  }
+  filter {
+    name   = "state"
+    values = ["available"]
+  }
+  owners = ["amazon"]
+}
+
+resource "aws_instance" "ec2_instance" {
+  ami           = data.aws_ami.amazon_linux_2.id
+  instance_type = "t2.micro"  # Eligible for the Free Tier
+  key_name      = aws_key_pair.key_pair.key_name
+  user_data = <<-EOF
+    #!/bin/bash
+    # Install Docker
+    yum update -y
+    amazon-linux-extras install docker
+    service docker start
+
+    # Authenticate Docker with ECR using the AWS CLI
+    $(aws ecr get-login --no-include-email --region eu-central-1)
+
+    # Pull and run your ECR image
+    docker pull ${local.account_id}.dkr.ecr.eu-central-1.amazonaws.com/${aws_ecr_repository.ecr_repository.name}:latest
+    docker run -d -p 80:80 ${local.account_id}.dkr.ecr.eu-central-1.amazonaws.com/${aws_ecr_repository.ecr_repository.name}:latest
+    EOF
+}
+
