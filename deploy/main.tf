@@ -4,7 +4,7 @@ provider "aws" {
 
 locals {
   account_id = "045222016985"
-  user_names = ["bai", "ems", "manasa", "salwa", "tamara"]
+  user_names = ["bai", "ems", "manasa", "salwa", "tamara", "amber"]
 }
 
 terraform {
@@ -100,31 +100,7 @@ resource "aws_iam_policy" "iam_policy_admin" {
   })
 }
 
-resource "aws_iam_role" "role_admin" {
-  name = "ChickenAdminRole"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Action = "sts:AssumeRole",
-        Effect = "Allow",
-        Principal = {
-          AWS = [
-            for user_name in local.user_names : "arn:aws:iam::${local.account_id}:user/${user_name}"
-          ]
-        },
-      },
-    ],
-  })
-}
-
-resource "aws_iam_policy_attachment" "iam_policy_admin_attachment" {
-  policy_arn = aws_iam_policy.iam_policy_admin.arn
-  roles      = [aws_iam_role.role_admin.name]
-  name       = "AdminPolicyAttachment"
-}
-
-resource "aws_iam_user_policy_attachment" "iam_user_role_attachment" {
+resource "aws_iam_user_policy_attachment" "iam_user_policy_attachment" {
   for_each = toset(local.user_names)
   user       = each.value
   policy_arn = aws_iam_policy.iam_policy_admin.arn
@@ -133,5 +109,5 @@ resource "aws_iam_user_policy_attachment" "iam_user_role_attachment" {
 resource "aws_iam_user_login_profile" "iam_user_login_profile" {
   for_each = toset(local.user_names)
   user    = each.value
-  password_reset_required = true
+  password_reset_required = false
 }
