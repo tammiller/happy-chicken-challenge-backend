@@ -126,7 +126,7 @@ resource "aws_ecr_repository" "ecr_repository" {
 # deployment
 resource "aws_key_pair" "key_pair" {
   key_name   = "key-pair"
-  public_key = file("~/.ssh/key-pair.pub")
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCUWdH4/r2R3B2WJ97W+mJnUcjJ8rpKhAccXcrk3NajCnnCrU2Gx6Mmpokaw3DN95MIV0VFTaBcACYwnw0tMOsO8kfs1WO1ZQcmR80hlMW8Tvv6LSH9cUOWl+E8LFapoRBY9jQO49NyPYnezpWTX0P5ywuQbSKKgkMoBiLZdkTdjKDwx98ILSxq1YxvZJ4Q2zRed68PuHryD9Cmp81KxJu58jPD8yV4wVgKPdo9aA62hkU2UeiYWCE9+9HqOb6rVr23loGuqCbH64u52HDdR4Ta8/AXOtABQOXsFKMbAj9O6CsqUQx087bHTB7r8aTOi+YCotb3Q/nJH24Im923jfxsKqX9Pomso5UcMq8O9w76NkWkfg4rboxohm9lEvzMXu2Y/fXI/U7GFeyXP0W34EbFFK6ZmjwAGTlCA3z6ir3GKUVhGIKpAhIU0EqX//6F80oQJ4WRZPchWGa9zjLaco5vR65VfVXF0+l6CmclnnScpgWCcIx6O98bCh/gPILFYfM="
 }
 
 data "aws_ami" "amazon_linux_2" {
