@@ -1,9 +1,9 @@
 ---
 openapi: 3.0.0
 info:
-  title: Daily Entries API
+  title: Happy Chicken API
   version: 1.0.0
-  description: An API for managing daily entries and challenges.
+  description: An API for managing daily vegan entries and challenges.
 paths:
   /users:
     post:
@@ -179,7 +179,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           format: uuid
           description: Unique identifier for the user.
         name:
