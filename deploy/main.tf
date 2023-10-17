@@ -129,40 +129,51 @@ resource "aws_key_pair" "key_pair" {
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCUWdH4/r2R3B2WJ97W+mJnUcjJ8rpKhAccXcrk3NajCnnCrU2Gx6Mmpokaw3DN95MIV0VFTaBcACYwnw0tMOsO8kfs1WO1ZQcmR80hlMW8Tvv6LSH9cUOWl+E8LFapoRBY9jQO49NyPYnezpWTX0P5ywuQbSKKgkMoBiLZdkTdjKDwx98ILSxq1YxvZJ4Q2zRed68PuHryD9Cmp81KxJu58jPD8yV4wVgKPdo9aA62hkU2UeiYWCE9+9HqOb6rVr23loGuqCbH64u52HDdR4Ta8/AXOtABQOXsFKMbAj9O6CsqUQx087bHTB7r8aTOi+YCotb3Q/nJH24Im923jfxsKqX9Pomso5UcMq8O9w76NkWkfg4rboxohm9lEvzMXu2Y/fXI/U7GFeyXP0W34EbFFK6ZmjwAGTlCA3z6ir3GKUVhGIKpAhIU0EqX//6F80oQJ4WRZPchWGa9zjLaco5vR65VfVXF0+l6CmclnnScpgWCcIx6O98bCh/gPILFYfM="
 }
 
-data "aws_ami" "amazon_linux_2" {
-  most_recent = true
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-hvm-*"]
-  }
-  filter {
-    name   = "owner-alias"
-    values = ["amazon"]
-  }
-  filter {
-    name   = "state"
-    values = ["available"]
-  }
-  owners = ["amazon"]
-}
+#data "aws_ami" "amazon_linux_2" {
+#  most_recent = true
+#  filter {
+#    name   = "name"
+#    values = ["amzn2-ami-hvm-*"]
+#  }
+#  filter {
+#    name   = "owner-alias"
+#    values = ["amazon"]
+#  }
+#  filter {
+#    name   = "state"
+#    values = ["available"]
+#  }
+#  owners = ["amazon"]
+#}
+#
+#resource "aws_instance" "ec2_instance" {
+#    ami           = data.aws_ami.amazon_linux_2.id
+#    instance_type = "t2.micro"
+#    key_name      = aws_key_pair.key_pair.key_name
+#
+#  user_data = <<-EOF
+#    #!/bin/bash
+#    sudo yum update -y
+#    sudo amazon-linux-extras install docker -y
+#    sudo service docker start
+#    sudo usermod -aG docker ec2-user
+#    sudo docker login -u AWS -p $(aws ecr get-login-password --region eu-central-1) ${local.account_id}.dkr.ecr.eu-central-1.amazonaws.com
+#    sudo docker pull ${local.account_id}.dkr.ecr.eu-central-1.amazonaws.com/${aws_ecr_repository.ecr_repository.name}:latest
+#    sudo docker run -d -p 80:8080 ${local.account_id}.dkr.ecr.eu-central-1.amazonaws.com/${aws_ecr_repository.ecr_repository.name}:latest
+#  EOF
+#}
+#
+#resource "aws_security_group" "instance_sg" {
+#  name        = "instance_sg"
+#  description = "Security group for the EC2 instance"
+#
+#  ingress {
+#    from_port   = 80
+#    to_port     = 80
+#    protocol    = "tcp"
+#    cidr_blocks = ["0.0.0.0/0"] # Allow incoming HTTP traffic from anywhere
+#  }
+#}
 
-resource "aws_instance" "ec2_instance" {
-  ami           = data.aws_ami.amazon_linux_2.id
-  instance_type = "t2.micro"  # Eligible for the Free Tier
-  key_name      = aws_key_pair.key_pair.key_name
-  user_data = <<-EOF
-    #!/bin/bash
-    # Install Docker
-    yum update -y
-    amazon-linux-extras install docker
-    service docker start
 
-    # Authenticate Docker with ECR using the AWS CLI
-    $(aws ecr get-login --no-include-email --region eu-central-1)
-
-    # Pull and run your ECR image
-    docker pull ${local.account_id}.dkr.ecr.eu-central-1.amazonaws.com/${aws_ecr_repository.ecr_repository.name}:latest
-    docker run -d -p 80:80 ${local.account_id}.dkr.ecr.eu-central-1.amazonaws.com/${aws_ecr_repository.ecr_repository.name}:latest
-    EOF
-}
 
