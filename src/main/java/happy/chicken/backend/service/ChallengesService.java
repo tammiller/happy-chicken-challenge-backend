@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Service
@@ -18,7 +19,8 @@ public class ChallengesService {
     }
 
     public Challenge getChallenge(final Integer challengeId) {
-        return null;
+        // TODO placeholder to deploy test purposes
+        return new Challenge().id(UUID.randomUUID());
     }
 
     public List<DailyEntry> getChallengeEntriesForUser(final Integer challengeId) {
