@@ -2,7 +2,7 @@ package happy.chicken.backend.data;
 
 import happy.chicken.backend.model.User;
 
-public interface UserRepository {
+public interface VoyagerRepository {
 
-    void saveCustomer(User user);
+    User saveCustomer(User user);
 }
