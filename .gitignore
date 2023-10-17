@@ -67,3 +67,5 @@ build/
 .vscode/
 
 .DS_Store
+
+shared-local-instance.db
