@@ -1,16 +1,11 @@
 package happy.chicken.backend.data;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import happy.chicken.backend.model.User;
 import happy.chicken.backend.model.Voyager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class VoyagerDynamoDBRepository implements VoyagerRepository {
-
-    @Autowired
-    private DynamoDBMapper dbMapper;
+public class VoyagerDynamoDBRepository extends DynamoDBRepository implements VoyagerRepository {
 
     @Override
     public User saveCustomer(User user) {
