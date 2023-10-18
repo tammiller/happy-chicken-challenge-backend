@@ -170,8 +170,12 @@ components:
           format: date
           description: Date of the daily entry in YYYY-MM-DD format.
         status:
-          type: boolean
-          description: The boolean status for the daily entry (e.g., true or false).
+          type: string
+          enum:
+            - GOOD
+            - NEUTRAL
+            - BAD
+          description: The status for the daily entry.
       required:
         - date
         - status
