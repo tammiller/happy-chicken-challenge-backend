@@ -1,7 +1,7 @@
 package happy.chicken.backend.data;
 
 import happy.chicken.backend.model.User;
-import happy.chicken.backend.model.Voyager;
+import happy.chicken.backend.data.model.Voyager;
 import org.springframework.stereotype.Repository;
 
 @Repository

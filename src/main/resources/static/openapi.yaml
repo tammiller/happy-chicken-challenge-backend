@@ -43,7 +43,7 @@ paths:
         required: true
         description: The unique identifier of the challenge.
         schema:
-          type: integer
+          type: string
     get:
       operationId: getChallenge
       summary: Get Challenge
@@ -55,6 +55,15 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Challenge"
+    delete:
+      operationId: deleteChallenge
+      summary: Delete Challenge
+      description: Delete a specific challenge by its ID.
+      responses:
+        "204":
+          description: Challenge deleted successfully.
+        "404":
+          description: Challenge not found.
   "/challenges/{challengeId}/daily-entries":
     parameters:
       - name: challengeId
@@ -62,7 +71,7 @@ paths:
         required: true
         description: The unique identifier of the challenge.
         schema:
-          type: integer
+          type: string
     get:
       operationId: getChallengeEntriesForUser
       summary: Get Daily Entries for a Challenge
@@ -86,7 +95,7 @@ paths:
           required: true
           description: The unique identifier of the challenge.
           schema:
-            type: integer
+            type: string
       requestBody:
         required: true
         content:
@@ -105,13 +114,13 @@ paths:
         required: true
         description: The unique identifier of the challenge.
         schema:
-          type: integer
+          type: string
       - name: entryId
         in: path
         required: true
         description: The unique identifier of the daily entry within the challenge.
         schema:
-          type: integer
+          type: string
     put:
       operationId: updateDailyEntry
       summary: Update Daily Entry
@@ -129,12 +138,21 @@ paths:
           description: Bad request. Check your request data.
         "404":
           description: Daily entry not found.
+    delete:
+      operationId: deleteDailyEntry
+      summary: Delete Daily Entry
+      description: Delete a specific daily entry within a challenge by its ID.
+      responses:
+        "204":
+          description: Daily entry deleted successfully.
+        "404":
+          description: Daily entry not found.
 components:
   schemas:
     Challenge:
       type: object
       properties:
-        id:
+        challenge_id:
           type: string
           format: uuid
           description: Unique identifier for the challenge.
@@ -163,7 +181,8 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
+          format: uuid
           description: Unique identifier for the daily entry.
         date:
           type: string
