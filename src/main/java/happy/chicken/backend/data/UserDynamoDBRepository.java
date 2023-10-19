@@ -1,15 +1,15 @@
 package happy.chicken.backend.data;
 
 import happy.chicken.backend.model.User;
-import happy.chicken.backend.data.model.Voyager;
+import happy.chicken.backend.data.model.UserDB;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class VoyagerDynamoDBRepository extends DynamoDBRepository implements VoyagerRepository {
+public class UserDynamoDBRepository extends DynamoDBRepository implements UserRepository {
 
     @Override
     public User saveCustomer(User user) {
-        Voyager voyager = new Voyager();
+        UserDB voyager = new UserDB();
         voyager.setId(user.getId().toString());
         voyager.setName(user.getName());
         dbMapper.save(voyager);

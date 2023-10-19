@@ -1,6 +1,6 @@
 package happy.chicken.backend.service;
 
-import happy.chicken.backend.data.VoyagerRepository;
+import happy.chicken.backend.data.UserRepository;
 import happy.chicken.backend.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class VoyagerService implements UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
-    private VoyagerRepository voyagerRepo;
+    private UserRepository voyagerRepo;
 
     @Override
     public void createUserAccount(User user) {

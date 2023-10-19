@@ -13,9 +13,9 @@ Requirement: aws-cli, access-key for your IAM user
 3. Run the local dynamo db (instruction in website)
 4. Create the necessary table through aws cli. Example:
    `aws dynamodb create-table \
-   --table-name voyager \
-   --attribute-definitions AttributeName=voyager_id,AttributeType=S \
-   --key-schema AttributeName=voyager_id,KeyType=HASH \
+   --table-name user \
+   --attribute-definitions AttributeName=user_id,AttributeType=S \
+   --key-schema AttributeName=user_id,KeyType=HASH \
    --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 \
    --endpoint-url http://localhost:8000`
 5. Run the app. You should be able to interact with the endpoint with the data saved in your local database.

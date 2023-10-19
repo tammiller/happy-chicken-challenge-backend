@@ -8,10 +8,10 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@DynamoDBTable(tableName = "voyager")
-public class Voyager {
+@DynamoDBTable(tableName = "user")
+public class UserDB {
 
-    @DynamoDBHashKey(attributeName = "voyager_id")
+    @DynamoDBHashKey(attributeName = "user_id")
     private String id;
 
     @DynamoDBAttribute
