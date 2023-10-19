@@ -7,19 +7,43 @@ info:
 paths:
   /users:
     post:
-      operationId: createUser
-      summary: Create a new user using given id and name
+      operationId: signInUser
+      summary: Signin using given email id and name, create if user does not exist
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/User"
+              $ref: "#/components/schemas/UserSignInRequest"
       responses:
         "201":
-          description: User created successfully.
+          description: User signed in successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
         "400":
           description: Bad request. Check your request data.
+  "/users/{userId}":
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        description: The internal unique identifier of user
+        schema:
+          type: string
+    get:
+      operationId: getUser
+      summary: Get User details
+      responses:
+        "200":
+          description: User details with the identity they used for signup
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: User is not found
   /challenges:
     post:
       operationId: createChallenge
@@ -208,6 +232,23 @@ components:
         name:
           type: string
           description: Name of the user.
+        email_id:
+          type: string
+          format: email
+          description: Email account used by user in signing up
       required:
         - id
+        - name
+    UserSignInRequest:
+      type: object
+      properties:
+        email_id:
+          type: string
+          format: email
+          description: User's email account to link to their voyager account
+        name:
+          type: string
+          description: Name of the user
+      required:
+        - email_id
         - name
