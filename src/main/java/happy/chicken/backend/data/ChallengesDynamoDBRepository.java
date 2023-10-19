@@ -5,16 +5,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.ErrorResponseException;
 
+import java.util.List;
+
 @Repository
 public class ChallengesDynamoDBRepository extends DynamoDBRepository implements ChallengesRepository {
 
     @Override
     public void createChallenge(final ChallengeDB challenge) {
-        try {
-            dbMapper.save(challenge);
-        } catch (Exception ex) {
-            System.out.print(ex.getMessage());
-        }
+        dbMapper.save(challenge);
     }
 
     @Override
@@ -38,5 +36,9 @@ public class ChallengesDynamoDBRepository extends DynamoDBRepository implements 
             throw new ErrorResponseException(HttpStatus.NOT_FOUND);
         }
         dbMapper.delete(challenge);
+    }
+
+    public List<ChallengeDB> getChallenges(String userId) {
+        // TODO list of challenges.
     }
 }

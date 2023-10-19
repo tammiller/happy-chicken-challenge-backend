@@ -3,9 +3,9 @@ server:
 
 amazon:
   access:
-    key:
+    key: AKIAQVB3RG7M2IZKEQXL
     secret-key:
-  region: ca-central-1
+  region: eu-central-1
   end-point:
     url: http://localhost:8000/
 

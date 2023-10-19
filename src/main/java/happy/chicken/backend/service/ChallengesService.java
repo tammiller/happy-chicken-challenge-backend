@@ -15,9 +15,10 @@ import java.util.UUID;
 public class ChallengesService {
     ChallengesDynamoDBRepository repository;
 
-    public void createChallenge(final Challenge challenge) {
+    public Challenge createChallenge(final Challenge challenge) {
         challenge.setChallengeId(UUID.randomUUID());
         repository.createChallenge(ChallengeDB.fromChallenge(challenge));
+        return challenge;
     }
 
     public Challenge getChallenge(final String challengeId) {
@@ -30,6 +31,7 @@ public class ChallengesService {
 
     public void addDailyEntry(final String challengeId, final DailyEntry dailyEntry) {
         ChallengeDB challenge = repository.getChallengeById(challengeId);
+        dailyEntry.setId(UUID.randomUUID());
         challenge.addDailyEntriesItem(dailyEntry);
         repository.updateChallenge(challenge);
     }
@@ -49,5 +51,15 @@ public class ChallengesService {
         ChallengeDB challenge = repository.getChallengeById(challengeId);
         challenge.getDailyEntries().removeIf(savedEntry -> entryId.equals(savedEntry.getId()));
         repository.updateChallenge(challenge);
+    }
+
+    public Challenge updateChallenge(final Challenge challenge) {
+        repository.updateChallenge(ChallengeDB.fromChallenge(challenge));
+        return challenge;
+    }
+
+    public List<Challenge> getChallenges(final String userId) {
+        var challenges = repository.getChallenges(userId);
+        return ChallengeDB.toChallenge(repository.getChallengeById(challengeId));
     }
 }
