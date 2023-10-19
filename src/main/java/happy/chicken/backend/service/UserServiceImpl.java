@@ -11,11 +11,10 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepository voyagerRepo;
+    private UserRepository userRepo;
 
     @Override
     public void createUserAccount(User user) {
-        log.info("saving user {}", user);
-        voyagerRepo.saveCustomer(user);
+        userRepo.saveCustomer(user);
     }
 }
