@@ -1,19 +1,17 @@
-package happy.chicken.backend.model;
+package happy.chicken.backend.data.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import lombok.*;
 
-@Getter
-@Setter
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@DynamoDBTable(tableName = "voyager")
-public class Voyager {
+@DynamoDBTable(tableName = "user")
+public class UserDB {
 
-    @DynamoDBHashKey(attributeName = "voyager_id")
+    @DynamoDBHashKey(attributeName = "user_id")
     private String id;
 
     @DynamoDBAttribute
