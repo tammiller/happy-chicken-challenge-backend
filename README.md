@@ -54,3 +54,24 @@ AWS should be configured in the computer with a user with the necessary permissi
 aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 045222016985.dkr.ecr.eu-central-1.amazonaws.com 
 mvn compile jib:build
 
+# Deploy in EC2
+
+Enter to the EC2 instance using EC2 Connect
+
+Show the current running images
+docker ps -a
+
+Stop the running container
+docker stop relaxed_lovelace
+
+Authenticate
+aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 045222016985.dkr.ecr.eu-central-1.amazonaws.com
+
+Pull the new version
+docker pull 045222016985.dkr.ecr.eu-central-1.amazonaws.com/happy-chicken-challenge-backend:latest
+
+Run the container
+docker run -d -p 80:8762 045222016985.dkr.ecr.eu-central-1.amazonaws.com/happy-chicken-challenge-backend:latest
+
+Log into the container
+docker exec -it <mycontainer> bash
