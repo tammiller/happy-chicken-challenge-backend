@@ -20,23 +20,13 @@ public class UserController implements UsersApi{
 
     @Override
     public ResponseEntity<User> getUser(String userId) {
-//        User user = userService.getUserInfo(userId);
-//        return ResponseEntity.ok(user);
-        return ResponseEntity.ok(User.builder()
-                        .name("TestUser")
-                        .emailId("email@test.com")
-                        .id(UUID.randomUUID())
-                .build());
+        User user = userService.getUserInfo(userId);
+        return ResponseEntity.ok(user);
     }
 
     @Override
     public ResponseEntity<User> signInUser(UserSignInRequest userSignInRequest) {
-//        User user = userService.signInUser(userSignInRequest);
-//        return ResponseEntity.status(201).body(user);
-        return ResponseEntity.ok(User.builder()
-                .name("TestUser")
-                .emailId("email@test.com")
-                .id(UUID.randomUUID())
-                .build());
+        User user = userService.signInUser(userSignInRequest);
+        return ResponseEntity.status(201).body(user);
     }
 }
