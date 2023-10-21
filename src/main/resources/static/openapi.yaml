@@ -5,16 +5,16 @@ info:
   version: 1.0.0
   description: An API for managing daily vegan entries and challenges.
 paths:
-  /users:
+  "/users/signup":
     post:
-      operationId: signInUser
-      summary: Signin using given email id and name, create if user does not exist
+      operationId: signUpUser
+      summary: Signup using given email id and name with given password, fail if user already has an account
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UserSignInRequest"
+              $ref: "#/components/schemas/UserSignUpRequest"
       responses:
         "201":
           description: User signed in successfully
@@ -22,6 +22,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
+        "400":
+          description: Bad request. Check your request data.
+  "/users/login":
+    post:
+      operationId: loginUser
+      summary: Login using given email id and password, fail if email is not registered
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLoginRequest"
+      responses:
+        "200":
+          description: User logged-in successfully. Return active user challenge - may be empty
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Challenge"
         "400":
           description: Bad request. Check your request data.
   "/users/{userId}":
@@ -357,7 +376,7 @@ components:
       required:
         - id
         - name
-    UserSignInRequest:
+    UserSignUpRequest:
       type: object
       properties:
         email_id:
@@ -367,9 +386,26 @@ components:
         name:
           type: string
           description: Name of the user
+        password:
+          type: string
+          description: User-elected password
       required:
         - email_id
         - name
+        - password
+    UserLoginRequest:
+      type: object
+      properties:
+        email_id:
+          type: string
+          format: email
+          description: Email account link to voyager account
+        password:
+          type: string
+          description: User-elected password from sign up
+      required:
+        - email_id
+        - password
     Problem:
       type: object
       properties:

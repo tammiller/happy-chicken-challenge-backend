@@ -13,11 +13,12 @@ import java.util.Iterator;
 public class UserDynamoDBRepository extends DynamoDBRepository implements UserRepository {
 
     @Override
-    public UserDB saveUser(User user) {
+    public UserDB saveUser(User user, String password) {
         UserDB userDB = new UserDB();
         userDB.setId(user.getId().toString());
         userDB.setName(user.getName());
         userDB.setEmail(user.getEmailId());
+        userDB.setPassword(password);
         dbMapper.save(userDB);
         return userDB;
     }
@@ -53,6 +54,7 @@ public class UserDynamoDBRepository extends DynamoDBRepository implements UserRe
         userDB.setId((String) item.get("user_id"));
         userDB.setName((String) item.get("name"));
         userDB.setEmail((String) item.get("email"));
+        userDB.setPassword((String) item.get("password"));
 
         return userDB;
     }

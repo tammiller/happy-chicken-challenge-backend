@@ -1,12 +1,14 @@
 package happy.chicken.backend.service;
 
+import happy.chicken.backend.model.Challenge;
 import happy.chicken.backend.model.User;
-import happy.chicken.backend.model.UserSignInRequest;
+import happy.chicken.backend.model.UserLoginRequest;
+import happy.chicken.backend.model.UserSignUpRequest;
 
 public interface UserService {
-    User createUserAccount(UserSignInRequest userSignIn);
+    User createUserAccount(UserSignUpRequest signUpRequest);
 
-    User signInUser(UserSignInRequest userSignIn);
+    Challenge loginUser(UserLoginRequest loginRequest);
 
     /**
      * Fetch user info based on internal user id

@@ -9,11 +9,6 @@ amazon:
   end-point:
     url: http://localhost:8000/
 
-# Set log file location and name
-logging:
-  file:
-    name: logfile.log
-
 springdoc:
   swagger-ui:
     url: "/openapi.yaml"
