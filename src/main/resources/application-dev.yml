@@ -3,11 +3,11 @@ server:
 
 amazon:
   access:
-    key: AKIAQVB3RG7M2IZKEQXL
-    secret-key:
-  region: eu-central-1
+    key: ${AWS_ACCESS_KEY}
+    secret-key: ${AWS_SECRET_KEY}
+    region: eu-central-1
   end-point:
-    url: http://localhost:8000/
+    url: http://dynamodb.eu-central-1.amazonaws.com
 
 # Set log file location and name
 logging:
