@@ -45,6 +45,16 @@ Requirement: aws-cli, access-key for your IAM user
         \"ProvisionedThroughput\": {\"ReadCapacityUnits\": 1, \"WriteCapacityUnits\": 1      },\"Projection\":{\"ProjectionType\":\"ALL\"}}}]" \
    --endpoint-url http://localhost:8000
    ```
+4. Add global secondary index to challenge table so we can query by user id
+   ```
+   aws dynamodb update-table \
+    --table-name user_challenge \
+    --attribute-definitions AttributeName=user_id,AttributeType=S \
+    --global-secondary-index-updates \
+        "[{\"Create\":{\"IndexName\": \"user-index\",\"KeySchema\":[{\"AttributeName\":\"user_id\",\"KeyType\":\"HASH\"}], \
+        \"ProvisionedThroughput\": {\"ReadCapacityUnits\": 1, \"WriteCapacityUnits\": 1      },\"Projection\":{\"ProjectionType\":\"ALL\"}}}]" \
+   --endpoint-url http://localhost:8000
+   ```
 
 # Publish docker image to ECR
 
