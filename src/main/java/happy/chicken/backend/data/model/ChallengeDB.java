@@ -1,9 +1,6 @@
 package happy.chicken.backend.data.model;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import happy.chicken.backend.config.LocalDateConverter;
 import happy.chicken.backend.model.Challenge;
 import happy.chicken.backend.model.DailyEntry;
@@ -35,10 +32,13 @@ public class ChallengeDB {
   @DynamoDBTypeConverted(converter = LocalDateConverter.class)
   private LocalDate start;
 
+  @DynamoDBAttribute(attributeName = "number_of_days")
   private Integer numberOfDays;
 
+  @DynamoDBAttribute
   private String status;
 
+  @DynamoDBAttribute
   private List<DailyEntryDB> dailyEntries;
 
   public static ChallengeDB fromChallenge(final Challenge challenge) {
