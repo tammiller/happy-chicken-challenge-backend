@@ -19,4 +19,7 @@ public class UserDB {
 
     @DynamoDBAttribute
     private String email;
+
+    @DynamoDBAttribute
+    private String password;
 }

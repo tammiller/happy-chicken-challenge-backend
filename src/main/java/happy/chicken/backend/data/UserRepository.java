@@ -5,7 +5,7 @@ import happy.chicken.backend.model.User;
 
 public interface UserRepository {
 
-    UserDB saveUser(User user);
+    UserDB saveUser(User user, String password);
 
     UserDB getUserById(String userId);
 
