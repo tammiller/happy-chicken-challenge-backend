@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -59,7 +60,7 @@ public class ChallengesService {
     }
 
     public List<Challenge> getChallenges(final String userId) {
-        var challenges = repository.getChallenges(userId);
-        return ChallengeDB.toChallenge(repository.getChallengeById(challengeId));
+        List<ChallengeDB> challenges = repository.getChallengesByUserId(userId);
+        return challenges.stream().map(ChallengeDB::toChallenge).collect(Collectors.toList());
     }
 }

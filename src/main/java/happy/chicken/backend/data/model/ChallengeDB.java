@@ -38,7 +38,7 @@ public class ChallengeDB {
   @DynamoDBAttribute
   private String status;
 
-  @DynamoDBAttribute
+  @DynamoDBAttribute(attributeName = "daily_entries")
   private List<DailyEntryDB> dailyEntries;
 
   public static ChallengeDB fromChallenge(final Challenge challenge) {
