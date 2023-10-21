@@ -166,12 +166,6 @@ paths:
                 $ref: "#/components/schemas/Problem"
   "/challenges/{challengeId}/daily-entries":
     parameters:
-      - name: userId
-        in: path
-        required: true
-        description: The unique identifier of the challenge.
-        schema:
-          type: string
       - name: challengeId
         in: path
         required: true

@@ -18,7 +18,7 @@ public class ChallengesController implements ChallengesApi {
     ChallengesService service;
 
     @Override
-    public ResponseEntity<DailyEntry> addDailyEntryForChallenge(final String userId, final String challengeId, final DailyEntry dailyEntry) {
+    public ResponseEntity<DailyEntry> addDailyEntryForChallenge(String challengeId, DailyEntry dailyEntry) {
         service.addDailyEntry(challengeId, dailyEntry);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -47,12 +47,10 @@ public class ChallengesController implements ChallengesApi {
         return ResponseEntity.ok(challenge);
     }
 
-
     @Override
-    public ResponseEntity<List<DailyEntry>> getChallengeEntriesForUser(final String userId, final String challengeId) {
+    public ResponseEntity<List<DailyEntry>> getChallengeEntriesForUser(String challengeId) {
         List<DailyEntry> entries = service.getChallengeEntriesForUser(challengeId);
         return ResponseEntity.ok(entries);
-
     }
 
     @Override
