@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     public Challenge loginUser(UserLoginRequest loginRequest) {
         UserDB userDB = userRepo.getUserByEmailId(loginRequest.getEmailId());
 
-        if (userDB == null || userDB.getPassword().equals(loginRequest.getPassword())) {
+        if (userDB == null || !userDB.getPassword().equals(loginRequest.getPassword())) {
             throw new ErrorResponseException(HttpStatus.BAD_REQUEST);
         }
 

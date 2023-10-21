@@ -54,6 +54,7 @@ public class UserDynamoDBRepository extends DynamoDBRepository implements UserRe
         userDB.setId((String) item.get("user_id"));
         userDB.setName((String) item.get("name"));
         userDB.setEmail((String) item.get("email"));
+        userDB.setPassword((String) item.get("password"));
 
         return userDB;
     }
