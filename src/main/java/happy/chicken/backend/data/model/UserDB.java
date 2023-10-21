@@ -2,7 +2,6 @@ package happy.chicken.backend.data.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import lombok.*;
 
@@ -15,9 +14,9 @@ public class UserDB {
     @DynamoDBHashKey(attributeName = "user_id")
     private String id;
 
-    @DynamoDBRangeKey
-    private String email;
-
     @DynamoDBAttribute
     private String name;
+
+    @DynamoDBAttribute
+    private String email;
 }
