@@ -18,46 +18,56 @@ public class ChallengesController implements ChallengesApi {
     ChallengesService service;
 
     @Override
-    public ResponseEntity<Void> addDailyEntryForChallenge(final String challengeId, final DailyEntry dailyEntry) {
-        service.addDailyEntry(challengeId, dailyEntry);
+    public ResponseEntity<DailyEntry> addDailyEntryForChallenge(String userId, String challengeId, DailyEntry dailyEntry) {
+        service.addDailyEntry(userId, challengeId, dailyEntry);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<Void> createChallenge(final Challenge challenge) {
-        service.createChallenge(challenge);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Challenge> createChallenge(final Challenge challenge) {
+        var result = service.createChallenge(challenge);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
     @Override
-    public ResponseEntity<Void> deleteChallenge(String challengeId) {
-        service.deleteChallenge(challengeId);
+    public ResponseEntity<Void> deleteChallenge(final String userId, final String challengeId) {
+        service.deleteChallenge(userId, challengeId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Override
-    public ResponseEntity<Void> deleteDailyEntry(String challengeId, String entryId) {
-        service.deleteDailyEntry(challengeId, entryId);
+    public ResponseEntity<Void> deleteDailyEntry(final String userId, final String challengeId, final String entryId) {
+        service.deleteDailyEntry(userId, challengeId, entryId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Override
-    public ResponseEntity<Challenge> getChallenge(final String challengeId) {
-        var challenge = service.getChallenge(challengeId);
+    public ResponseEntity<Challenge> getChallenge(final String userId, final String challengeId) {
+        var challenge = service.getChallenge(userId, challengeId);
         return ResponseEntity.ok(challenge);
     }
 
-
     @Override
-    public ResponseEntity<List<DailyEntry>> getChallengeEntriesForUser(final String challengeId) {
-        List<DailyEntry> entries = service.getChallengeEntriesForUser(challengeId);
+    public ResponseEntity<List<DailyEntry>> getChallengeEntriesForUser(String userId, String challengeId) {
+        List<DailyEntry> entries = service.getChallengeEntriesForUser(userId, challengeId);
         return ResponseEntity.ok(entries);
-
     }
 
     @Override
-    public ResponseEntity<Void> updateDailyEntry(final String challengeId, final String entryId, final DailyEntry dailyEntry) {
-        service.updateDailyEntry(challengeId, entryId, dailyEntry);
+    public ResponseEntity<List<Challenge>> getChallengesForUser(final String userId) {
+        List<Challenge> challenges = service.getChallenges(userId);
+        return ResponseEntity.ok(challenges);
+    }
+
+    @Override
+    public ResponseEntity<Challenge> updateChallenge(final String userId, final String challengeId, final Challenge challenge) {
+        var result = service.updateChallenge(userId, challenge);
+        return ResponseEntity.ok(result);
+    }
+
+    @Override
+    public ResponseEntity<DailyEntry> updateDailyEntry(final String userId, final String challengeId, final String entryId, final DailyEntry dailyEntry) {
+        service.updateDailyEntry(userId, challengeId, entryId, dailyEntry);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

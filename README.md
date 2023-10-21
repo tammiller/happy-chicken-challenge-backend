@@ -2,7 +2,7 @@
 Backend repository for our WWC Hackathon Project
 
 # commands
-To run: mvn spring-boot:run
+To run: mvn spring-boot:run \
 To run openAPIgen: mvn clean compile
 
 
@@ -42,6 +42,16 @@ Requirement: aws-cli, access-key for your IAM user
     --attribute-definitions AttributeName=email,AttributeType=S \
     --global-secondary-index-updates \
         "[{\"Create\":{\"IndexName\": \"email-index\",\"KeySchema\":[{\"AttributeName\":\"email\",\"KeyType\":\"HASH\"}], \
+        \"ProvisionedThroughput\": {\"ReadCapacityUnits\": 1, \"WriteCapacityUnits\": 1      },\"Projection\":{\"ProjectionType\":\"ALL\"}}}]" \
+   --endpoint-url http://localhost:8000
+   ```
+4. Add global secondary index to challenge table so we can query by user id
+   ```
+   aws dynamodb update-table \
+    --table-name user_challenge \
+    --attribute-definitions AttributeName=user_id,AttributeType=S \
+    --global-secondary-index-updates \
+        "[{\"Create\":{\"IndexName\": \"user-index\",\"KeySchema\":[{\"AttributeName\":\"user_id\",\"KeyType\":\"HASH\"}], \
         \"ProvisionedThroughput\": {\"ReadCapacityUnits\": 1, \"WriteCapacityUnits\": 1      },\"Projection\":{\"ProjectionType\":\"ALL\"}}}]" \
    --endpoint-url http://localhost:8000
    ```
