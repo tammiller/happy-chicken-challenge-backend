@@ -7,6 +7,7 @@ import happy.chicken.backend.model.DailyEntry;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Builder
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @DynamoDBDocument
 public class DailyEntryDB {
     private UUID id;

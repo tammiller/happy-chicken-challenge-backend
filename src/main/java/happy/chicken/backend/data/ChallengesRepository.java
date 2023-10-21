@@ -9,11 +9,11 @@ public interface ChallengesRepository {
 
     void createChallenge(ChallengeDB challenge);
 
-    ChallengeDB getChallengeById(String id);
+    ChallengeDB getChallengeById(String id, String userId);
 
     void updateChallenge(ChallengeDB challenge);
 
-    void deleteChallenge(String id);
+    void deleteChallenge(final String userId, final String id) ;
 
     List<ChallengeDB> getChallengesByUserId(String userId);
 }

@@ -164,8 +164,14 @@ paths:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
-  "/challenges/{challengeId}/daily-entries":
+  "/challenges/{userId}/{challengeId}/daily-entries":
     parameters:
+      - name: userId
+        in: path
+        required: true
+        description: The internal unique identifier of user
+        schema:
+          type: string
       - name: challengeId
         in: path
         required: true
@@ -221,8 +227,14 @@ paths:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
-  "/challenges/{challengeId}/daily-entries/{entryId}":
+  "/challenges/{userId}/{challengeId}/daily-entries/{entryId}":
     parameters:
+      - name: userId
+        in: path
+        required: true
+        description: The internal unique identifier of user
+        schema:
+          type: string
       - name: challengeId
         in: path
         required: true

@@ -21,8 +21,8 @@ public class ChallengesDynamoDBRepository extends DynamoDBRepository implements 
     }
 
     @Override
-    public ChallengeDB getChallengeById(final String id) {
-        ChallengeDB challenge = dbMapper.load(ChallengeDB.class, id);
+    public ChallengeDB getChallengeById(final String id, String userId) {
+        ChallengeDB challenge = dbMapper.load(ChallengeDB.class, id, userId);
         if (challenge == null) {
             throw new ErrorResponseException(HttpStatus.NOT_FOUND);
         }
@@ -35,8 +35,8 @@ public class ChallengesDynamoDBRepository extends DynamoDBRepository implements 
     }
 
     @Override
-    public void deleteChallenge(final String id) {
-        var challenge = getChallengeById(id);
+    public void deleteChallenge(final String userId, final String id) {
+        var challenge = getChallengeById(id, userId);
         if (challenge == null) {
             throw new ErrorResponseException(HttpStatus.NOT_FOUND);
         }
@@ -59,7 +59,7 @@ public class ChallengesDynamoDBRepository extends DynamoDBRepository implements 
         if (iter.hasNext()) {
             Item item = iter.next();
             String challengeId = item.get("challenge_id").toString();
-            ChallengeDB challengeDB = getChallengeById(challengeId);
+            ChallengeDB challengeDB = getChallengeById(challengeId, userId);
             userChallenges.add(challengeDB);
         }
 
