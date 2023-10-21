@@ -29,24 +29,36 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User signInUser(UserSignInRequest userSignIn) {
-        UserDB userDB = userRepo.getUserByEmailId(userSignIn.getEmailId());
+        try {
+            UserDB userDB = userRepo.getUserByEmailId(userSignIn.getEmailId());
 
-        if (userDB == null) {
-            return createUserAccount(userSignIn);
+            if (userDB == null) {
+                return createUserAccount(userSignIn);
+            }
+
+            return toUser(userDB);
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            log.error(ex.getStackTrace().toString());
+            return null;
         }
-
-        return toUser(userDB);
     }
 
     @Override
     public User getUserInfo(String userId) {
-        UserDB userDB = userRepo.getUserById(userId);
+        try {
+            UserDB userDB = userRepo.getUserById(userId);
 
-        if (userDB == null) {
-            throw new ErrorResponseException(HttpStatus.NOT_FOUND);
+            if (userDB == null) {
+                throw new ErrorResponseException(HttpStatus.NOT_FOUND);
+            }
+
+            return toUser(userDB);
+        }  catch (Exception ex) {
+            log.error(ex.getMessage());
+            log.error(ex.getStackTrace().toString());
+            return null;
         }
-
-        return toUser(userDB);
     }
 
     private User toUser(UserDB userDB){
