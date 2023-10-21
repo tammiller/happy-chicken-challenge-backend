@@ -60,13 +60,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserInfo(String userId) {
-        UserDB userDB = userRepo.getUserById(userId);
+        try {
+            UserDB userDB = userRepo.getUserById(userId);
 
-        if (userDB == null) {
-            throw new ErrorResponseException(HttpStatus.NOT_FOUND);
+            if (userDB == null) {
+                throw new ErrorResponseException(HttpStatus.NOT_FOUND);
+            }
+
+            return toUser(userDB);
+        }  catch (Exception ex) {
+            log.error(ex.getMessage());
+            log.error(ex.getStackTrace().toString());
+            return null;
         }
-
-        return toUser(userDB);
     }
 
     private User toUser(UserDB userDB){

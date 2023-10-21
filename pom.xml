@@ -140,6 +140,11 @@
 					<to>
 						<image>045222016985.dkr.ecr.eu-central-1.amazonaws.com/happy-chicken-challenge-backend:latest</image>
 					</to>
+					<container>
+						<environment>
+							<SPRING_PROFILES_ACTIVE>dev</SPRING_PROFILES_ACTIVE>
+						</environment>
+					</container>
 				</configuration>
 			</plugin>
 		</plugins>
