@@ -220,13 +220,6 @@ paths:
       operationId: addDailyEntryForChallenge
       summary: Create Daily Entry for Challenge
       description: Create a new daily entry for a specific challenge.
-      parameters:
-        - name: challengeId
-          in: path
-          required: true
-          description: The unique identifier of the challenge.
-          schema:
-            type: string
       requestBody:
         required: true
         content:
