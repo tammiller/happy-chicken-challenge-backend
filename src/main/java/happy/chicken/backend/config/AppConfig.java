@@ -14,7 +14,7 @@ public class AppConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 //TODO: For security, filter path allowed for CORS
-                registry.addMapping("*").allowedOrigins("*");
+                registry.addMapping("/**").allowedOrigins("*");
             }
         };
     }
