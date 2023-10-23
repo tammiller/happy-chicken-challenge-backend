@@ -7,7 +7,12 @@ amazon:
     secret-key:
   region: eu-central-1
   end-point:
-    url: http://localhost:8000/
+    url: http://dynamodb.eu-central-1.amazonaws.com
+
+# Set log file location and name
+logging:
+  file:
+    name: logfile.log
 
 springdoc:
   swagger-ui:

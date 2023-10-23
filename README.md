@@ -84,4 +84,4 @@ Run the container
 docker run -d -p 80:8762 045222016985.dkr.ecr.eu-central-1.amazonaws.com/happy-chicken-challenge-backend:latest
 
 Log into the container
-docker exec -it <mycontainer> bash
+docker exec -it <mycontainer> bin/sh
